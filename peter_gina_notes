@@ -1,0 +1,33 @@
+rails generate controller creates helper files: views, helper method inheritance, etc.
+
+helper methods go in ApplicationController - available to all controllers
+
+prefer 'addressable' tool to writing manual URLs.
+Because in the absence of an explicit render statement, your controller will by default try to render a template with the same name as the controller action - in this case, it was looking for a template called index.html.erb in app/views/users.
+
+The key method here is #params. #params is a method provided by ActionController::Base that returns a hash of all the parameters available. The parameters are sourced from three places:
+
+Route parameters (e.g. the :id from /users/:id)
+Query string (the part of the URL after the ?: ?key=value)
+POST/PATCH request data (the body of the HTTP request).
+
+
+'params' method is part of ApplicationController, likely
+
+
+!!!!always need renders in controller actions!!!
+
+
+change_column(:users, :username, :string, :null => false, :unique => true)
+^ right way to alter table?
+
+Can enforce unique on DB level without index?? Cannot -- must have index for uniqueness
+
+#destroy, #update, etc. -- raises error if called on Class and IDs dont' exists. Prefer 404 error to errors thrown by these verbs. #find first (throws 404 if not found), then destroy/update the instance of the Model -- will return false if invalid.
+
+
+Calling resources method twice on same table/controller creates twice as many routes -- use once, with options hash, and block, ie...
+
+resources :users, only: [:create, :destroy, :index, :show, :update] do
+  resources :contacts, only: [:index]
+end
