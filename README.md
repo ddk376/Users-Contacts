@@ -4,5 +4,5 @@ bin/my_script.rb contains script uses addressable/uri and RestClient gems to gen
 
 # Features #
 - [x] Polymorphic association Comment that belongs to both user or contact
-- [ ] Favorite contacts
-- [ ] contact group
+- [x] Favorite contacts
+- [X] contact group - Users can have many groups and Contacts can belong to more than one group

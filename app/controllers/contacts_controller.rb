@@ -21,6 +21,16 @@ class ContactsController < ApplicationController
     render json: contact
   end
 
+  def favorite
+    contact = Contact
+      .select("DISTINCT contacts.*")
+      .joins("JOIN contact_shares ON contact_shares.contact_id = contacts.id
+             JOIN users ON users.id = contact_shares.user_id")
+      .where("contact_shares.user_id = ? OR contacts.user_id = ? &&
+      (contacts.favorite == true || contact_shares.favorite == true)", params[:user_id], params[:user_id])
+
+  end
+
   def show
     render json: Contact.find(params[:id])
   end
