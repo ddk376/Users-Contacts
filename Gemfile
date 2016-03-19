@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-
+# makes it easy to construct URLs
 gem 'addressable'
-
+# provides simple interface for making HTTP requests
 gem 'rest-client'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'

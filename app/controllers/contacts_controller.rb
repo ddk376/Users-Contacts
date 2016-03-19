@@ -1,24 +1,8 @@
 class ContactsController < ApplicationController
 
   def index
-    # SELECT
-    #   contacts.*
-    # FROM
-    #   contacts
-    # JOIN
-    #   contact_shares ON contact_shares.contact_id = contacts.id
-    # JOIN
-    #   users ON users.id = contact_shares.user_id
-    # WHERE
-    #   "contact_shares.user_id = ? OR contacts.user_id = ?"
-
-    contact = Contact
-      .select("DISTINCT contacts.*")
-      .joins("JOIN contact_shares ON contact_shares.contact_id = contacts.id
-             JOIN users ON users.id = contact_shares.user_id")
-      .where("contact_shares.user_id = ? OR contacts.user_id = ?", params[:user_id], params[:user_id])
-
-    render json: contact
+    contacts = Contact.contacts_for_user_id(params[:id])
+    render json: contacts
   end
 
   def favorite
@@ -59,12 +43,11 @@ class ContactsController < ApplicationController
   end
 
   def destroy
-    destroyed_contact = Contact.destroy(params[:id])
-    render json: destroyed_contact
+    destroyed_contact = Contact.destroy(params[:id]) #@contact = Contact.find(params[:id])
+    render json: destroyed_contact                   # render :json => @contact.destroy
   end
 
   private
-
   def contact_params
     params.require(:contact).permit(:user_id, :name, :email)
   end

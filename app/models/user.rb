@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :contact, :dependent => :destroy       # owner of this contact
 
-  has_many :shares,
+  has_many :contact_shares,
     class_name: "ContactShare",
     foreign_key: :user_id,
     dependent: :destroy
@@ -15,4 +15,6 @@ class User < ActiveRecord::Base
   has_many :comments, as: :commentable
 
   has_many :groups
+
+
 end
